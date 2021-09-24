@@ -11,7 +11,7 @@ Invoke as the first step in a workflow run:
 ``` yaml
 
     steps:
-      - name: yeti-ci
+      - name: Setup CI Environment
         uses: yetanalytics/actions/setup-env@<tag>
         with:
             java-version: '11'
