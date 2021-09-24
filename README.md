@@ -34,6 +34,6 @@ Providing an environment suitable for testing and building Clojure(Script) proje
 
 # License
 
-Copyright © 2018-2021 Yet Analytics Inc.
+Copyright © 2021 Yet Analytics Inc.
 
 Licensed under the Apache License, Version 2.0.
