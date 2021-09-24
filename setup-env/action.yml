@@ -1,0 +1,45 @@
+name: Setup Yeti CI/CD Environment
+
+description: Provides required software for testing and building Yet Analytics projects.
+
+inputs:
+  java-version:
+    description: Version of java to install
+    required: true
+    default: '11'
+
+  java-distribution:
+    description: Distribution of java to install
+    required: true
+    default: 'temurin'
+
+  node-version:
+    description: Version of node to install
+    required: true
+    default: '14'
+
+  clojure-version:
+    description: Version of Clojure CLI to install
+    required: true
+    default: '1.10.3.943'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: ${{ inputs.java-distribution }}
+        java-version: ${{ inputs.java-version }}
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Setup Clojure
+      uses: DeLaGuardo/setup-clojure@3.5
+      with:
+        cli: ${{ inputs.clojure-version }}
