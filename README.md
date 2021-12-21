@@ -25,7 +25,7 @@ Default options are shown, they may be omitted.
 
 Will do the following:
 
-* Check out the project
+* ~~Check out the project~~ post v0, the calling workflow is expected to do this.
 * Install Java
 * Install node
 * Install Clojure CLI
