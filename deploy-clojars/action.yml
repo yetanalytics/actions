@@ -64,12 +64,12 @@ runs:
         :version "${{ github.ref_name }}"
         :src-dirs ["${{ inputs.src-dir }}"]
         :resource-dirs ["${{ inputs.resource-dir }}"]
-        :scm {
+        :scm '{
           :url ${{ inputs.github-url }}
           :tag ${{ inputs.github-tag }}
           :connection ${{ inputs.github-conn }}
           :dev-connection ${{ inputs.github-dev-conn }}
-        }
+        }'
 
     # This is mainly a debug step that exists to ensure sanity checking
     - name: Publish artifact
