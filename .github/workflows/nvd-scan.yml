@@ -24,6 +24,8 @@ jobs:
 
       - name: Set up Clojure env
         uses: yetanalytics/actions/setup-env@4775f5f2eaa4f33f79bbf4c5b6b184845ee3d352
+        with:
+          clojure-version: '1.10.3.1020'
 
       - name: Cache any deps saved
         uses: actions/cache@v2
