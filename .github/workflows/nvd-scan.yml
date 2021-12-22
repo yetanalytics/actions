@@ -37,12 +37,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nvd-deps-
 
-      - name: debug clojure version
-        run: clojure --version
-
       - name: Install NVD tool
-        run: |
-          clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "${{ inputs.nvd-clojure-version }}"}' :as nvd
+        run: clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version,"${{ inputs.nvd-clojure-version }}"}' :as nvd
 
       - name: Run NVD scan
         run: clojure -Tnvd nvd.task/check :classpath '"'"$(${{ inputs.classpath-command }})"'"'
