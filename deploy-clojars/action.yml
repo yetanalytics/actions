@@ -37,11 +37,11 @@ inputs:
   # GitHub Secrets
 
   clojars-username:
-    description: The Clojars username (should be a GitHub secret).
+    description: The Clojars username (should be stored as a GitHub secret).
     required: true
 
-  clojars-token:
-    description: The Clojars access token (should be a GitHub secret).
+  clojars-password:
+    description: The Clojars password (should be an access token stored as a GitHub secret).
     required: true
 
 runs:
@@ -86,4 +86,4 @@ runs:
         :version '"${{ inputs.version }}"'
       env:
         CLOJARS_USERNAME: ${{ inputs.clojars-username }}
-        CLOJARS_PASSWORD: ${{ inputs.clojars-token }}
+        CLOJARS_PASSWORD: ${{ inputs.clojars-password }}
