@@ -51,6 +51,8 @@ Invoke as a workflow job:
 
 ```
 
+Will attempt to run an OWASP dep check via [nvd-clojure](https://github.com/rm-hull/nvd-clojure/blob/master/README.md). If any CVEs are found it will fail. Reports are available as `<sha>-nvd-report`
+
 # License
 
 Copyright © 2021 Yet Analytics Inc.
