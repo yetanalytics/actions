@@ -38,8 +38,7 @@ jobs:
             ${{ runner.os }}-nvd-deps-
 
       - name: Install NVD tool
-        shell: bash
-        run: clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "${{ inputs.nvd-clojure-version }}"}' :as nvd
+        run: clojure -Ttools install 'nvd-clojure/nvd-clojure' '{:mvn/version "${{ inputs.nvd-clojure-version }}"}' :as nvd
 
       - name: Run NVD scan
         run: clojure -Tnvd nvd.task/check :classpath '"'"$(${{ inputs.classpath-command }})"'"'
