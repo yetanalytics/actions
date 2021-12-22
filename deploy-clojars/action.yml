@@ -82,7 +82,7 @@ runs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.artifact-id }}-artifact-${{ github.ref_name }}
-        path: target/${{ inputs.artifact-id }}-${{ github.ref_name }}
+        path: target/${{ inputs.artifact-id }}-${{ github.ref_name }}.jar
 
     # - name: Deploy to Clojars
     #   shell: bash
