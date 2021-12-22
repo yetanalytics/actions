@@ -54,21 +54,27 @@ runs:
   steps:
     - name: Add aliases
       shell: bash
-      run: clojure -Sdeps '{:aliases {:build {:replace-deps {io.github.seancorfield/build-clj {:git/tag "v0.6.3" :git/sha "9b8e09b"}} :ns-default build}}}'
+      run: >
+        clojure -Sdeps
+        '{:aliases
+           {:build
+             {:replace-deps {io.github.seancorfield/build-clj {:git/tag "v0.6.3"
+                                                               :git/sha "9b8e09b"}}
+              :ns-default build}}}'
 
     - name: Build JAR file
       shell: bash
       run: >
         clojure -X:build jar
         :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
-        :version "${{ github.ref_name }}"
-        :src-dirs ["${{ inputs.src-dir }}"]
-        :resource-dirs ["${{ inputs.resource-dir }}"]
+        :version '"${{ github.ref_name }}"'
+        :src-dirs '["${{ inputs.src-dir }}"]'
+        :resource-dirs '["${{ inputs.resource-dir }}"]'
         :scm '{
-          :url ${{ inputs.github-url }}
-          :tag ${{ inputs.github-tag }}
-          :connection ${{ inputs.github-conn }}
-          :dev-connection ${{ inputs.github-dev-conn }}
+          :url "${{ inputs.github-url }}"
+          :tag "${{ inputs.github-tag }}"
+          :connection "${{ inputs.github-conn }}"
+          :developerConnection "${{ inputs.github-dev-conn }}"
         }'
 
     # This is mainly a debug step that exists to ensure sanity checking
