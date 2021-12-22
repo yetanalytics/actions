@@ -1,0 +1,48 @@
+name: NVD Scanning for Clojure Projects
+
+on:
+  workflow_call:
+    inputs:
+      classpath-command:
+        required: false
+        description: nvd-clojure classpath command
+        type: string
+        default: 'clojure -Spath'
+      nvd-clojure-version:
+        required: false
+        description: nvd-clojure version
+        type: string
+        default: '1.9.0'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout calling project
+        uses: actions/checkout@v2
+
+      - name: Set up Clojure env
+        uses: yetanalytics/actions/setup-env@4775f5f2eaa4f33f79bbf4c5b6b184845ee3d352
+
+      - name: Cache any deps saved
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2
+            ~/.gitlibs
+          key: ${{ runner.os }}-nvd-deps-${{ hashFiles('~/.m2,~/.gitlibs') }}
+          restore-keys: |
+            ${{ runner.os }}-nvd-deps-
+
+      - name: Install NVD tool
+        run: clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "${{ inputs.nvd-clojure-version }}"}' :as nvd
+
+      - name: Run NVD scan
+        run: clojure -Tnvd nvd.task/check :classpath '"'"$(${{ inputs.classpath-command }})"'"'
+
+      - name: Produce Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.GITHUB_SHA }}-nvd-report
+          path: target/nvd
