@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Clojure env
-        uses: yetanalytics/actions/setup-env@277303ea149906cf1aaa7b767cfd12e28cfc31b9
+        uses: yetanalytics/actions/setup-env@14649ebc3eb8c7092a01ab7d3a576efc5c3eb9aa
 
       - name: Get current date
         id: date
