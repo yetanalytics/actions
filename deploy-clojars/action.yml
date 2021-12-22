@@ -4,8 +4,8 @@ description: Build JAR and Deploy to Clojars
 
 inputs:
   group-id:
-    description: Clojars Group ID (e.g. com.yetanalytics)
-    required: true
+    description: Clojars Group ID (defaults to `com.yetanalytics`)
+    required: false
     default: 'com.yetanalytics'
 
   artifact-id:
@@ -13,31 +13,14 @@ inputs:
     required: true
 
   src-dir:
-    description: The source directory (e.g. src/main)
-    required: true
+    description: The source directory (defaults to `src/main`)
+    required: false
     default: 'src/main'
 
   resource-dir:
-    description: The resource directory (e.g. resources)
-    required: true
+    description: The resource directory (defaults to `resources`)
+    required: false
     default: 'resources'
-
-  github-url:
-    description: The GitHub URL
-    required: true
-
-  github-tag:
-    description: The GitHub tag (e.g. a commit SHA or just HEAD)
-    required: true
-    default: HEAD
-
-  github-conn:
-    description: The GitHub connection URL
-    required: true
-
-  github-dev-conn:
-    description: The GitHub developer connection URL
-    required: true
 
   # Passing GH secrets as inputs seems kind of sketch...
 
@@ -71,10 +54,10 @@ runs:
         :src-dirs '["${{ inputs.src-dir }}"]'
         :resource-dirs '["${{ inputs.resource-dir }}"]'
         :scm '{
-          :url "${{ inputs.github-url }}"
-          :tag "${{ inputs.github-tag }}"
-          :connection "${{ inputs.github-conn }}"
-          :developerConnection "${{ inputs.github-dev-conn }}"
+          :url "https://github.com/${{ github.repository }}"
+          :tag "${{ github.sha }}"
+          :connection "scm:git:git://github.com/${{ github.repository }}.git"
+          :developerConnection "scm:git:ssh://git@github.com/${{ github.repository }}.git"
         }'
 
     # This is mainly a debug step that exists to ensure sanity checking
