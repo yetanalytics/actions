@@ -25,15 +25,24 @@ jobs:
       - name: Set up Clojure env
         uses: yetanalytics/actions/setup-env@277303ea149906cf1aaa7b767cfd12e28cfc31b9
 
-      - name: Cache any deps saved
+      - name: Get current date
+        id: date
+        run: |
+          echo "::set-output name=y::$(date +'%Y')"
+          echo "::set-output name=m::$(date +'%m')"
+          echo "::set-output name=d::$(date +'%d')"
+
+      - name: Cache any deps
         uses: actions/cache@v2
         with:
           path: |
             ~/.m2
             ~/.gitlibs
-          key: ${{ runner.os }}-nvd-deps-${{ hashFiles('~/.m2/repository/org/owasp/dependency-check-utils/6.5.0/data/jsrepository.json') }}
+          key: ${{ runner.os }}-nvd-all-deps-${{ steps.date.outputs.y }}-${{ steps.date.outputs.m }}-${{ steps.date.outputs.d }}
           restore-keys: |
-            ${{ runner.os }}-nvd-deps-
+            ${{ runner.os }}-nvd-all-deps-${{ steps.date.outputs.y }}-${{ steps.date.outputs.m }}-
+            ${{ runner.os }}-nvd-all-deps-${{ steps.date.outputs.y }}-
+            ${{ runner.os }}-nvd-all-deps-
 
       - name: Run NVD scan
         run: clojure -Sdeps '{:aliases {:nvd {:replace-deps {nvd-clojure/nvd-clojure {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}' -Xnvd nvd.task/check :classpath '"'"$(${{ inputs.classpath-command }})"'"'
