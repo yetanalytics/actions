@@ -31,7 +31,7 @@ jobs:
           path: |
             ~/.m2
             ~/.gitlibs
-          key: ${{ runner.os }}-nvd-deps-${{ hashFiles('~/.m2,~/.gitlibs') }}
+          key: ${{ runner.os }}-nvd-deps-${{ hashFiles('~/.m2/repository/org/owasp/dependency-check-utils/6.5.0/data/jsrepository.json') }}
           restore-keys: |
             ${{ runner.os }}-nvd-deps-
 
