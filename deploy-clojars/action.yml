@@ -53,13 +53,16 @@ runs:
   using: "composite"
   steps:
     - name: Add aliases
+      shell: bash
       run: clojure -Sdeps '{:aliases {:build {:replace-deps {io.github.seancorfield/build-clj {:git/tag "v0.6.3" :git/sha "9b8e09b"}} :ns-default build}}}'
 
     - name: Extract version
       id: version
+      shell: bash
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs\/tags\/v}
 
     - name: Build JAR file
+      shell: bash
       run: >
         clojure -X:build jar
         :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
@@ -80,6 +83,7 @@ runs:
         path: target/${{ inputs.artifact-id }}-${{ steps.version.outputs.VERSION }}
 
     # - name: Deploy to Clojars
+    #   shell: bash
     #   run: >
     #     clojure -X:build deploy
     #     :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
