@@ -50,5 +50,5 @@ jobs:
       - name: Produce Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.GITHUB_SHA }}-nvd-report
+          name: ${{ github.sha }}-nvd-report
           path: target/nvd
