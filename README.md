@@ -4,7 +4,7 @@ GH Actions for use in Yet Analytics projects
 
 # Usage
 
-## Setup CI/CD Environment
+## `setup-env` - Setup CI/CD Environment
 
 Invoke as the first step in a workflow run:
 
@@ -31,6 +31,25 @@ Will do the following:
 * Install Clojure CLI
 
 Providing an environment suitable for testing and building Clojure(Script) projects.
+
+## `nvd-scan` - Reusable Vulnerability Scanner Workflow:
+
+Invoke as a workflow job:
+
+``` yaml
+...
+  nvd_scan:
+    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@<tag>
+    with:
+      classpath-command: 'clojure -Spath -A:any:alias' # include aliases you want to check or omit the input
+      nvd-clojure-version: '1.9.0' # default
+
+  docker:
+    needs:
+      - nvd_scan # prevents docker from running if scan fails
+...
+
+```
 
 # License
 
