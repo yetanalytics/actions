@@ -1,4 +1,4 @@
-name: Clojars Deploy
+name: Clojars Deployment
 
 description: Build JAR and Deploy to Clojars
 
@@ -34,15 +34,15 @@ inputs:
     required: false
     default: '["resources"]'
 
-  # Passing GH secrets as inputs seems kind of sketch...
+  # GitHub Secrets
 
-  # clojars-username:
-  #   description: The Clojars username GH secret
-  #   required: true
+  clojars-username:
+    description: The Clojars username (should be a GitHub secret).
+    required: true
 
-  # clojars-token:
-  #   description: The Clojars access token GH secret
-  #   required: true
+  clojars-token:
+    description: The Clojars access token (should be a GitHub secret).
+    required: true
 
 runs:
   using: "composite"
@@ -52,10 +52,9 @@ runs:
       run: >
         clojure -Sdeps
         '{:aliases
-           {:build
-             {:replace-deps {io.github.seancorfield/build-clj {:git/tag "v0.6.3"
-                                                               :git/sha "9b8e09b"}}
-              :ns-default build}}}'
+          {:build
+           {:replace-deps {io.github.seancorfield/build-clj {:git/tag "v0.6.3" :git/sha "9b8e09b"}}
+            :ns-default build}}}'
 
     - name: Build JAR file
       shell: bash
@@ -79,12 +78,12 @@ runs:
         name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
         path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
 
-    # - name: Deploy to Clojars
-    #   shell: bash
-    #   run: >
-    #     clojure -X:build deploy
-    #     :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
-    #     :version "${{ inputs.version }}"
-    #   env:
-    #     CLOJARS_USERNAME: ${{ inputs.clojars-username }}
-    #     CLOJARS_PASSWORD: ${{ inputs.clojars-token }}
+    - name: Deploy to Clojars
+      shell: bash
+      run: >
+        clojure -X:build deploy
+        :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
+        :version '"${{ inputs.version }}"'
+      env:
+        CLOJARS_USERNAME: ${{ inputs.clojars-username }}
+        CLOJARS_PASSWORD: ${{ inputs.clojars-token }}
