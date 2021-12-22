@@ -54,8 +54,8 @@ runs:
         clojure -X:build jar
         :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
         :version '"${{ github.ref_name }}"'
-        :src-dirs ${{ inputs.src-dirs }}
-        :resource-dirs ${{ inputs.resource-dirs }}
+        :src-dirs '${{ inputs.src-dirs }}'
+        :resource-dirs '${{ inputs.resource-dirs }}'
         :scm '{
           :url "https://github.com/${{ github.repository }}"
           :tag "${{ github.sha }}"
