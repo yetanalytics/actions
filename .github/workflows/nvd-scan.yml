@@ -57,7 +57,7 @@ jobs:
 
       - name: Produce Artifact
         uses: actions/upload-artifact@v2
-        if: ${{ always() }}
+        if: ${{ always() }} # Always produce an artifact
         with:
           name: ${{ github.sha }}-nvd-report
           path: target/nvd
