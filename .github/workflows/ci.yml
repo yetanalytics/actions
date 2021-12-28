@@ -11,5 +11,16 @@ on:
       - 'master'
 
 jobs:
+  deploy-clojars:
+    uses: yetanalytics/actions/deploy-clojars/action.yml@clojars
+    with:
+      artifact-id: 'actions'
+      version: 'LATEST'
+      resource-dirs: '[]'
+      publish: false
+      # We're not actually publishing to Clojars so throw in some dummy values
+      clojars-username: 'foo'
+      clojars-deploy-token: 'bar'
+
   nvd_scan:
     uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@nvd-scan
