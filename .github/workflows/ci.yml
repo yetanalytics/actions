@@ -12,15 +12,21 @@ on:
 
 jobs:
   deploy-clojars:
-    uses: yetanalytics/actions/deploy-clojars/action.yml@clojars
-    with:
-      artifact-id: 'actions'
-      version: 'LATEST'
-      resource-dirs: '[]'
-      publish: false
-      # We're not actually publishing to Clojars so throw in some dummy values
-      clojars-username: 'foo'
-      clojars-deploy-token: 'bar'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get an env
+        uses: yetanalytics/actions/setup-env@v0
+      
+      - name: Test deployment
+        uses: yetanalytics/actions/deploy-clojars/action.yml@clojars
+        with:
+          artifact-id: 'actions'
+          version: 'LATEST'
+          resource-dirs: '[]'
+          publish: false
+          # We're not actually publishing to Clojars so use dummy values
+          clojars-username: 'foo'
+          clojars-deploy-token: 'bar'
 
   nvd_scan:
     uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@nvd-scan
