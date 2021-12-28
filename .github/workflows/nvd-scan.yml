@@ -48,10 +48,10 @@ jobs:
         run: >
           clojure -Sdeps
           '{:aliases
-            {:nvd
-             {:replace-deps
-              {nvd-clojure/nvd-clojure
-               {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}'
+          {:nvd
+          {:replace-deps
+          {nvd-clojure/nvd-clojure
+          {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}'
           -Xnvd nvd.task/check
           :classpath '"'"$(${{ inputs.classpath-command }})"'"'
 
