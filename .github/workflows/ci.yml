@@ -12,4 +12,4 @@ on:
 
 jobs:
   nvd_scan:
-    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@c920fd070e052f21f70a853e8d79b25c25f45df6
+    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@nvd-scan
