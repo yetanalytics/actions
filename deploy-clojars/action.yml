@@ -78,12 +78,12 @@ runs:
         name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
         path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
 
-    - name: Deploy to Clojars
-      shell: bash
-      run: >
-        clojure -X:build deploy
-        :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
-        :version '"${{ inputs.version }}"'
-      env:
-        CLOJARS_USERNAME: ${{ inputs.clojars-username }}
-        CLOJARS_PASSWORD: ${{ inputs.clojars-password }}
+    # - name: Deploy to Clojars
+    #   shell: bash
+    #   run: >
+    #     clojure -X:build deploy
+    #     :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
+    #     :version '"${{ inputs.version }}"'
+    #   env:
+    #     CLOJARS_USERNAME: ${{ inputs.clojars-username }}
+    #     CLOJARS_PASSWORD: ${{ inputs.clojars-password }}
