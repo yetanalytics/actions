@@ -45,7 +45,15 @@ jobs:
             ${{ runner.os }}-nvd-all-deps-
 
       - name: Run NVD scan
-        run: clojure -Sdeps '{:aliases {:nvd {:replace-deps {nvd-clojure/nvd-clojure {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}' -Xnvd nvd.task/check :classpath '"'"$(${{ inputs.classpath-command }})"'"'
+        run: >
+          clojure -Sdeps
+          '{:aliases
+            {:nvd
+             {:replace-deps
+              {nvd-clojure/nvd-clojure
+               {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}'
+          -Xnvd nvd.task/check
+          :classpath '"'"$(${{ inputs.classpath-command }})"'"'
 
       - name: Produce Artifact
         uses: actions/upload-artifact@v2
