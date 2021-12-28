@@ -84,7 +84,7 @@ runs:
 
     - name: Deploy to Clojars
       shell: bash
-      if: ${{ inputs.publish == 'true' }}
+      # if: ${{ inputs.publish == 'true' }}
       run: >
         clojure
         -Sdeps ${{ steps.build-aliases.outputs.aliases }}
