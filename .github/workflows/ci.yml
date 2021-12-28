@@ -1,0 +1,15 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'master'
+
+jobs:
+  nvd_scan:
+    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@nvd-scan

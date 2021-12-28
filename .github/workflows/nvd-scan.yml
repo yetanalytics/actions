@@ -1,0 +1,63 @@
+name: NVD Scanning for Clojure Projects
+
+on:
+  workflow_call:
+    inputs:
+      classpath-command:
+        required: false
+        description: nvd-clojure classpath command
+        type: string
+        default: 'clojure -Spath'
+      nvd-clojure-version:
+        required: false
+        description: nvd-clojure version
+        type: string
+        default: '1.9.0'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout calling project
+        uses: actions/checkout@v2
+
+      - name: Set up Clojure env
+        uses: yetanalytics/actions/setup-env@14649ebc3eb8c7092a01ab7d3a576efc5c3eb9aa
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "::set-output name=y::$(date +'%Y')"
+          echo "::set-output name=m::$(date +'%m')"
+          echo "::set-output name=d::$(date +'%d')"
+
+      - name: Cache any deps
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2
+            ~/.gitlibs
+          key: ${{ runner.os }}-nvd-all-deps-${{ steps.date.outputs.y }}-${{ steps.date.outputs.m }}-${{ steps.date.outputs.d }}
+          restore-keys: |
+            ${{ runner.os }}-nvd-all-deps-${{ steps.date.outputs.y }}-${{ steps.date.outputs.m }}-
+            ${{ runner.os }}-nvd-all-deps-${{ steps.date.outputs.y }}-
+            ${{ runner.os }}-nvd-all-deps-
+
+      - name: Run NVD scan
+        run: >
+          clojure -Sdeps
+          '{:aliases
+          {:nvd
+          {:replace-deps
+          {nvd-clojure/nvd-clojure
+          {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}'
+          -Xnvd nvd.task/check
+          :classpath '"'"$(${{ inputs.classpath-command }})"'"'
+
+      - name: Produce Artifact
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }} # Always produce an artifact
+        with:
+          name: ${{ github.sha }}-nvd-report
+          path: target/nvd
