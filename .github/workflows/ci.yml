@@ -11,5 +11,25 @@ on:
       - 'master'
 
 jobs:
+  deploy-clojars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Get an env
+        uses: yetanalytics/actions/setup-env@v0
+      
+      - name: Test deployment
+        uses: yetanalytics/actions/deploy-clojars@clojars
+        with:
+          artifact-id: 'actions'
+          version: 'LATEST'
+          resource-dirs: '[]'
+          publish: false
+          # We're not actually publishing to Clojars so use dummy values
+          clojars-username: 'foo'
+          clojars-deploy-token: 'bar'
+
   nvd_scan:
     uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@nvd-scan

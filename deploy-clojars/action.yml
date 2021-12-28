@@ -1,0 +1,96 @@
+name: Clojars Deployment
+
+description: Build JAR and Deploy to Clojars
+
+inputs:
+  group-id:
+    description: The Clojars Group ID. Defaults to 'com.yetanalytics'.
+    required: false
+    default: 'com.yetanalytics'
+
+  artifact-id:
+    description: The Clojars Artifact ID (i.e. the name of the lib itself)
+    required: true
+
+  version:
+    description: The version string.
+    required: true
+
+  src-dirs:
+    description: >
+      A quoted array of the source directories. Defaults to '["src/main"]'.
+    required: false
+    default: '["src/main"]'
+
+  resource-dirs:
+    description: >
+      A quoted array of the resource directories. Defaults to '["resources"]'.
+      Pass '[]' if no resource directories exist.
+    required: false
+    default: '["resources"]'
+
+  publish:
+    description: >
+      Whether or not to actually publish to Clojars.
+      Default true; turn off for debugging.
+    required: false
+    default: true
+
+  # GitHub Secrets
+
+  clojars-username:
+    description: The Clojars username (should be stored as a GitHub secret).
+    required: true
+
+  clojars-deploy-token:
+    description: The Clojars deploy token (should be stored as a GitHub secret).
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Construct aliases
+      id: 'build-aliases'
+      shell: bash
+      run: >-
+        echo "::set-output name=aliases::'{:aliases
+        {:build
+        {:replace-deps {io.github.seancorfield/build-clj
+        {:git/tag \"v0.6.3\" :git/sha \"9b8e09b\" }}
+        :ns-default org.corfield.build }}}'"
+
+    - name: Build JAR file
+      shell: bash
+      run: >
+        clojure -Sdeps ${{ steps.build-aliases.outputs.aliases }}
+        -X:build jar
+        :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
+        :version '"${{ inputs.version }}"'
+        :src-dirs '${{ inputs.src-dirs }}'
+        :resource-dirs '${{ inputs.resource-dirs }}'
+        :scm '{
+          :url "https://github.com/${{ github.repository }}"
+          :tag "${{ github.sha }}"
+          :connection "scm:git:git://github.com/${{ github.repository }}.git"
+          :developerConnection "scm:git:ssh://git@github.com/${{ github.repository }}.git"
+        }'
+
+    # This is a debug step that exists for sanity checking
+    - name: Publish artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
+        path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
+
+    - name: Deploy to Clojars
+      shell: bash
+      if: ${{ inputs.publish == true }}
+      run: >
+        clojure
+        -Sdeps ${{ steps.build-aliases.outputs.aliases }}
+        -X:build deploy
+        :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
+        :version '"${{ inputs.version }}"'
+      env:
+        CLOJARS_USERNAME: ${{ inputs.clojars-username }}
+        CLOJARS_PASSWORD: ${{ inputs.clojars-deploy-token }}
