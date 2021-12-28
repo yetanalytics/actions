@@ -53,16 +53,16 @@ runs:
       id: 'build-aliases'
       shell: bash
       run: >-
-        echo "::set-output name=aliases::{:aliases
+        echo "::set-output name=aliases::'{:aliases
         {:build
         {:replace-deps {io.github.seancorfield/build-clj
         {:git/tag \"v0.6.3\" :git/sha \"9b8e09b\" }}
-        :ns-default org.corfield.build }}}"
+        :ns-default org.corfield.build }}}'"
 
     - name: Build JAR file
       shell: bash
       run: >
-        clojure -Sdeps '${{ steps.build-aliases.outputs.aliases }}'
+        clojure -Sdeps ${{ steps.build-aliases.outputs.aliases }}
         -X:build jar
         :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
         :version '"${{ inputs.version }}"'
