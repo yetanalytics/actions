@@ -12,4 +12,4 @@ on:
 
 jobs:
   nvd_scan:
-    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@${{ github.sha }}
+    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@${{github.sha}}
