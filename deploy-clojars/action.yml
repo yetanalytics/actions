@@ -29,6 +29,13 @@ inputs:
     required: false
     default: '["resources"]'
 
+  publish:
+    description: >
+      Whether or not to actually publish to Clojars.
+      Default true; turn off for debugging.
+    required: false
+    default: true
+
   # GitHub Secrets
 
   clojars-username:
@@ -76,14 +83,15 @@ runs:
         name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
         path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
 
-    # - name: Deploy to Clojars
-    #   shell: bash
-    #   run: >
-    #     clojure
-    #     -Sdeps ${{ steps.build-aliases.outputs.aliases }}
-    #     -X:build deploy
-    #     :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
-    #     :version '"${{ inputs.version }}"'
-    #   env:
-    #     CLOJARS_USERNAME: ${{ inputs.clojars-username }}
-    #     CLOJARS_PASSWORD: ${{ inputs.clojars-deploy-token }}
+    - name: Deploy to Clojars
+      shell: bash
+      if: ${{ inputs.publish }}
+      run: >
+        clojure
+        -Sdeps ${{ steps.build-aliases.outputs.aliases }}
+        -X:build deploy
+        :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
+        :version '"${{ inputs.version }}"'
+      env:
+        CLOJARS_USERNAME: ${{ inputs.clojars-username }}
+        CLOJARS_PASSWORD: ${{ inputs.clojars-deploy-token }}
