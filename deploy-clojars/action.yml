@@ -13,13 +13,8 @@ inputs:
     required: true
 
   version:
-    description: >
-      The version string. Defaults to the Git branch or tag associated with
-      the event that triggered this action. NOTE: If the tag is prefixed
-      (e.g. 'v1.0.0'), you should remove the prefix, then pass in the
-      truncated tag as the arg (e.g. pass in `${GITHUB_REF#refs\/tags\/v}`).
-    required: false
-    default: ${{ github.ref_name }}
+    description: The version string.
+    required: true
 
   src-dirs:
     description: >
@@ -40,8 +35,8 @@ inputs:
     description: The Clojars username (should be stored as a GitHub secret).
     required: true
 
-  clojars-password:
-    description: The Clojars password (should be an access token stored as a GitHub secret).
+  clojars-deploy-token:
+    description: The Clojars deploy token (should be stored as a GitHub secret).
     required: true
 
 runs:
@@ -86,4 +81,4 @@ runs:
     #     :version '"${{ inputs.version }}"'
     #   env:
     #     CLOJARS_USERNAME: ${{ inputs.clojars-username }}
-    #     CLOJARS_PASSWORD: ${{ inputs.clojars-password }}
+    #     CLOJARS_PASSWORD: ${{ inputs.clojars-deploy-token }}
