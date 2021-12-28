@@ -1,6 +1,6 @@
 # yetanalytics/actions
 
-GH Actions for use in Yet Analytics projects
+GH Actions for use in Yet Analytics projects. See the [Tags](https://github.com/yetanalytics/actions/tags) page for the latest version.
 
 # Usage
 
@@ -83,6 +83,6 @@ Will attempt to run an OWASP dep check via [nvd-clojure](https://github.com/rm-h
 
 # License
 
-Copyright © 2021 Yet Analytics Inc.
+Copyright © 2021-2022 Yet Analytics Inc.
 
 Licensed under the Apache License, Version 2.0.
