@@ -26,7 +26,7 @@ jobs:
           artifact-id: 'actions'
           version: 'LATEST'
           resource-dirs: '[]'
-          publish: true
+          publish: 'true'
           # We're not actually publishing to Clojars so use dummy values
           clojars-username: 'foo'
           clojars-deploy-token: 'bar'
