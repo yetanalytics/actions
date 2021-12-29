@@ -84,12 +84,9 @@ runs:
 
     - name: Deploy to Clojars
       shell: bash
-      run: >
-        clojure
-        -Sdeps ${{ steps.build-aliases.outputs.aliases }}
-        -X:build deploy
-        :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }}
-        :version '"${{ inputs.version }}"'
+      run: |
+        echo "Deploying artifact..."
+        clojure -Sdeps ${{ steps.build-aliases.outputs.aliases }} -X:build deploy :lib ${{ inputs.group-id }}/${{ inputs.artifact-id }} :version '"${{ inputs.version }}"'
       env:
         CLOJARS_USERNAME: ${{ inputs.clojars-username }}
         CLOJARS_PASSWORD: ${{ inputs.clojars-deploy-token }}
