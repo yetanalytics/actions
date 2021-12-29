@@ -18,10 +18,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get an env
-        uses: yetanalytics/actions/setup-env@v0.0.1
+        uses: yetanalytics/actions/setup-env@v0.0.2
       
       - name: Test deployment
-        uses: yetanalytics/actions/deploy-clojars@clojars-publish-fix
+        uses: yetanalytics/actions/deploy-clojars@v0.0.2
         with:
           artifact-id: 'actions'
           version: 'LATEST'
@@ -32,4 +32,4 @@ jobs:
           clojars-deploy-token: 'bar'
 
   nvd_scan:
-    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@v0.0.1
+    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@v0.0.2
