@@ -75,12 +75,16 @@ runs:
           :developerConnection "scm:git:ssh://git@github.com/${{ github.repository }}.git"
         }'
 
-    - name: Print Hello World
-      shell: bash
-      run: echo "Hello World!"
+    # This is a debug step that exists for sanity checking
+    - name: Publish artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
+        path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
 
     - name: Deploy to Clojars
       shell: bash
+      if: ${{ inputs.publish == true }}
       run: >
         clojure
         -Sdeps ${{ steps.build-aliases.outputs.aliases }}
@@ -90,10 +94,3 @@ runs:
       env:
         CLOJARS_USERNAME: ${{ inputs.clojars-username }}
         CLOJARS_PASSWORD: ${{ inputs.clojars-deploy-token }}
-
-    # This is a debug step that exists for sanity checking
-    - name: Publish artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
-        path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
