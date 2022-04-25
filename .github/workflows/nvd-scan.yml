@@ -59,7 +59,7 @@ jobs:
           {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}'
           -Xnvd nvd.task/check
           :classpath '"'"$(${{ inputs.classpath-command }})"'"'
-          :config-filename ${{ inputs.nvd-config-filename }}
+          :config-filename '"${{ inputs.nvd-config-filename }}"'
 
       - name: Produce Artifact
         uses: actions/upload-artifact@v2
