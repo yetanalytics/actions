@@ -12,7 +12,12 @@ on:
         required: false
         description: nvd-clojure version
         type: string
-        default: '1.9.0'
+        default: '2.5.0'
+      nvd-clojure-options:
+        required: false
+        description: nvd-clojure additional options
+        type: string
+        default: ''
 
 jobs:
   scan:
@@ -54,6 +59,7 @@ jobs:
           {:mvn/version "${{ inputs.nvd-clojure-version }}"}}}}}'
           -Xnvd nvd.task/check
           :classpath '"'"$(${{ inputs.classpath-command }})"'"'
+          ${{ inputs.nvd-clojure-options }}
 
       - name: Produce Artifact
         uses: actions/upload-artifact@v2
