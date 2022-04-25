@@ -71,6 +71,7 @@ Invoke as a workflow job:
     with:
       classpath-command: 'clojure -Spath -A:any:alias' # include aliases you want to check or omit the input
       nvd-clojure-version: '1.9.0' # default
+      nvd-config-filename: 'nvd_config.json' # optional JSON config file for custom configuration
 
   docker:
     needs:
