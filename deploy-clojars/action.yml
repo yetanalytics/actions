@@ -77,7 +77,7 @@ runs:
 
     # This is a debug step that exists for sanity checking
     - name: Publish artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.artifact-id }}-artifact-${{ inputs.version }}
         path: target/${{ inputs.artifact-id }}-${{ inputs.version }}.jar
