@@ -12,7 +12,7 @@ on:
         required: false
         description: nvd-clojure version
         type: string
-        default: '2.5.0'
+        default: '2.9.0'
       nvd-config-filename:
         required: false
         description: nvd-clojure configuration file
