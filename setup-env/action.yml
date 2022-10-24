@@ -21,7 +21,7 @@ inputs:
   clojure-version:
     description: Version of Clojure CLI to install
     required: true
-    default: '1.11.1'
+    default: '1.11.1.1165'
 
 runs:
   using: "composite"
