@@ -16,7 +16,7 @@ inputs:
   node-version:
     description: Version of node to install
     required: true
-    default: '14'
+    default: '16'
 
   clojure-version:
     description: Version of Clojure CLI to install
