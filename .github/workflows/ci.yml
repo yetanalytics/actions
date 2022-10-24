@@ -18,10 +18,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get an env
-        uses: yetanalytics/actions/setup-env@v0.0.2
+        uses: yetanalytics/actions/setup-env@v0.0.4-test2
       
       - name: Test deployment
-        uses: yetanalytics/actions/deploy-clojars@v0.0.2
+        uses: yetanalytics/actions/deploy-clojars@v0.0.4-test2
         with:
           artifact-id: 'actions'
           version: 'LATEST'
