@@ -25,10 +25,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout calling project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Clojure env
-        uses: yetanalytics/actions/setup-env@v0.0.2
+        uses: yetanalytics/actions/setup-env@v0.0.4-test2
 
       - name: Get current date
         id: date
@@ -62,7 +62,7 @@ jobs:
           :config-filename '"${{ inputs.nvd-config-filename }}"'
 
       - name: Produce Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }} # Always produce an artifact
         with:
           name: ${{ github.sha }}-nvd-report

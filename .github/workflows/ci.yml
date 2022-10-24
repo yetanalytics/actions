@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get an env
         uses: yetanalytics/actions/setup-env@v0.0.4-test2
@@ -32,4 +32,4 @@ jobs:
           clojars-deploy-token: 'bar'
 
   nvd_scan:
-    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@v0.0.2
+    uses: yetanalytics/actions/.github/workflows/nvd-scan.yml@v0.0.4-test2
