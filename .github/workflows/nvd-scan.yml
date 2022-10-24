@@ -12,7 +12,7 @@ on:
         required: false
         description: nvd-clojure version
         type: string
-        default: '2.5.0'
+        default: '2.9.0'
       nvd-config-filename:
         required: false
         description: nvd-clojure configuration file
@@ -25,20 +25,20 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout calling project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Clojure env
-        uses: yetanalytics/actions/setup-env@v0.0.2
+        uses: yetanalytics/actions/setup-env@v0.0.4
 
       - name: Get current date
         id: date
         run: |
-          echo "::set-output name=y::$(date +'%Y')"
-          echo "::set-output name=m::$(date +'%m')"
-          echo "::set-output name=d::$(date +'%d')"
+          echo "y=$(date +'%Y')" >> $GITHUB_OUTPUT
+          echo "m=$(date +'%m')" >> $GITHUB_OUTPUT
+          echo "d=$(date +'%d')" >> $GITHUB_OUTPUT
 
       - name: Cache any deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.m2
@@ -62,7 +62,7 @@ jobs:
           :config-filename '"${{ inputs.nvd-config-filename }}"'
 
       - name: Produce Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }} # Always produce an artifact
         with:
           name: ${{ github.sha }}-nvd-report
