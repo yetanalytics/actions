@@ -33,9 +33,9 @@ jobs:
       - name: Get current date
         id: date
         run: |
-          echo "::set-output name=y::$(date +'%Y')"
-          echo "::set-output name=m::$(date +'%m')"
-          echo "::set-output name=d::$(date +'%d')"
+          echo "y=$(date +'%Y')" >> $GITHUB_OUTPUT
+          echo "m=$(date +'%m')" >> $GITHUB_OUTPUT
+          echo "d=$(date +'%d')" >> $GITHUB_OUTPUT
 
       - name: Cache any deps
         uses: actions/cache@v2
