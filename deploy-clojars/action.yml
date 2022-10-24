@@ -56,7 +56,7 @@ runs:
         echo "aliases='{:aliases
         {:build
         {:replace-deps {io.github.seancorfield/build-clj
-        {:git/tag \"v0.6.3\" :git/sha \"9b8e09b\" }}
+        {:git/tag \"v0.8.3\" :git/sha \"7ac1f8d\" }}
         :ns-default org.corfield.build }}}'"
         >> $GITHUB_OUTPUT
 
